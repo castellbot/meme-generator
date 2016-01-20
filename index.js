@@ -1,3 +1,4 @@
+var imgur_cliend_id = "b49dbb4170a773f";
 
 var up = document.getElementById('upload'),
     text1 = document.getElementById('text1'),
@@ -48,9 +49,7 @@ function changeAndUpdateImage() {
             updateImage();
         }
         img.src = dataURL;
-
     });
-       
 }
 
 function drawLines(ctx, lines, x, y, yStep) {
@@ -59,20 +58,18 @@ function drawLines(ctx, lines, x, y, yStep) {
     lines.forEach(function(l, k) {
         ctx.strokeText(l, x, y + yStep * k);
         ctx.fillText(l,   x, y + yStep * k);
- 
+
     });
 }
-
-
 
 function updateImage() {
     var LINE_HEIGHT = 1.1;
     var PARAGRAPH_HEIGHT = 1.5;
-    
+
     var imgSizeLimit = parseFloat(sliderImage.value);
 
     var canvasSize = autoScale({
-        w: curImg.width, 
+        w: curImg.width,
         h: curImg.height
     }, imgSizeLimit);
 
@@ -83,7 +80,7 @@ function updateImage() {
     var txtSize = parseFloat(sliderSize.value) || 24;
 
     if (!curImg) return;
-    
+
     ctx.strokeStyle = '#000000';
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -94,14 +91,13 @@ function updateImage() {
     ctx.textBaseline = 'middle';
     ctx.lineWidth = Math.round(Math.max(1, txtSize / 12));
 
-    drawLines(ctx, text1.value, canvas.width / 2, 
+    drawLines(ctx, text1.value, canvas.width / 2,
               txtSize * PARAGRAPH_HEIGHT / 2, LINE_HEIGHT * txtSize);
-    drawLines(ctx, text2.value, canvas.width / 2, 
+    drawLines(ctx, text2.value, canvas.width / 2,
               canvas.height - txtSize * PARAGRAPH_HEIGHT / 2, -1 * LINE_HEIGHT * txtSize );
 
     console.log(text1.value, text2.value);
 }
-
 
 function autoScale(input, max) {
     var larger = input.w > input.h ? 'w' : 'h',
@@ -114,9 +110,8 @@ function autoScale(input, max) {
     return output;
 }
 
-
 function uploadToImgur() {
-    uploaded.innerHTML = "Please wait, uploading...";
+    uploaded.innerHTML = "Subiendo imagen, espere un momento...";
     var img;
     try {
         img = canvas.toDataURL('image/png', 1.0).split(',')[1];
@@ -134,13 +129,13 @@ function uploadToImgur() {
             image: img
         },
         headers: {
-            Authorization: 'Client-ID 4b64f0eff077008'
+            Authorization: 'Client-ID ' + imgur_cliend_id
         },
         dataType: 'json'
     }).success(function(data) {
         var l = data.data.link;
         uploaded.innerHTML = '<a href="' + l + '" target="_blank">'
-        + l
+        + '<img src="'+l+'" alt="zombie" class="img-responsive">'
         + '</a>';
     }).error(function(err) {
         console.error(err);
@@ -148,3 +143,45 @@ function uploadToImgur() {
 
 }
 
+function selImage (imghtml) {
+    var imgjq = $(imghtml);
+    console.log(imgjq);
+    var img = new Image();
+    //img.setAttribute('crossOrigin', 'anonymous');
+    img.onload = function() {
+        curImg = img;
+        sliderImage.value = Math.max(img.width, img.height);
+        canvas.width = img.width;
+        canvas.height = img.height;
+        //canvas.style.height = img.height + 'px';
+        //canvas.style.width = img.width + 'px';
+        updateImage();
+    };
+    img.src = imgjq.attr('src');
+}
+
+function create(){
+    var uri = canvas.toDataURL();
+
+    //downloadImage(uri,generateName());
+    downloadImage(uri,'meme');
+}
+
+function generateName() {
+    var n = [];
+    for(var i =0; i < 10;i++) {
+        n.push((Math.floor(Math.random() *16)).toString(16));
+    }
+    return n.join('');
+}
+
+function downloadImage(uri,name) {
+    var link = document.createElement('a');
+    link.download = name;
+    link.href = uri;
+    link.click();
+}
+
+$(document).ready(function(){
+    $('#download').click(create);
+});

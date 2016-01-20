@@ -1,13 +1,16 @@
 <html>
 <head>
-<title>Meme generator</title>
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-<style type="text/css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Meme generator</title>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style type="text/css">
     #main {
-        width: 600px;
-        margin-left: auto;
-        margin-right: auto;
+        /*width: 600px;*/
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
     }
     .caption {
         width: 100%;
@@ -15,36 +18,72 @@
     table td {
         padding-right: 10px;
     }
-    textarea {
+    .form-control {
         text-align: center;
         font-size: 22px;
         height: 3em;
     }
-</style>
+    </style>
 </head>
 <body>
-    <div id="main">
+    <div id="main" class="container">
         <div id="header">
-            <h2>Meme Generator</h2>
-            <br>
+            <h2 class="text-center">Meme Generator</h2>
         </div>
-        <div style="font-size: 20px">Upload an image from your computer:</div>
-        <input type="file" id="image"><br>
-        <textarea class="caption" id="text1" cols="60" rows="3" placeholder="Top text"></textarea><br>
-        <canvas id="canvas" style="width: 600px"></canvas>
-        <textarea class="caption" id="text2" cols="60" rows="3" placeholder="Bottom text"></textarea><br><br>
-        <table>
-            <tr><td>Font size:</td><td><input type="range" id="sliderSize" value="50" min="10" max="72"></td></tr>
-            <tr><td>Image size:</td><td><input type="range" id="sliderImage" value="600" min="240" max="600"></td></tr>
-        </table>
-        <br>
-        <button id="upload" class="btn btn-primary btn-lg">Upload!</button>
-        <div id="uploaded" style="color: gray">Link will appear here</div>
-        <br><br><br><br>
-        <img id="placeholder_image" src="gg-greg.png" style="display: none">
-        <a href="https://github.com/skopjehacklab/meme-generator"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="text-center">Seleccionar Imagen</h3>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <!-- <img src="http://i.memecaptain.com/src_images/Bphc-g.png" alt="zombie1" class="img-responsive" onclick="selImage(this);">
+                        <img src="http://i.memecaptain.com/src_images/o9aiQg.jpg" alt="zombie1" class="img-responsive" onclick="selImage(this);">
+                        <img src="http://i.memecaptain.com/src_images/EFQN6A.jpg" alt="zombie1" class="img-responsive" onclick="selImage(this);">
+                        <img src="http://i.memecaptain.com/src_images/bX6ptQ.jpg" alt="zombie1" class="img-responsive" onclick="selImage(this);"> -->
+                        <img src="./zombies/zombie1.png" alt="zombie1" class="img-responsive" onclick="selImage(this);">
+                        <img src="./zombies/zombie2.jpg" alt="zombie1" class="img-responsive" onclick="selImage(this);">
+                        <img src="./zombies/zombie3.jpg" alt="zombie1" class="img-responsive" onclick="selImage(this);">
+                        <img src="./zombies/zombie4.jpg" alt="zombie1" class="img-responsive" onclick="selImage(this);">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <h3 class="text-center">Personaliza tu Meme</h3>
+                    <input class="caption form-control" id="text1" type="text" placeholder="Texto superior"><br>
+                    <canvas id="canvas" class="img-responsive text-center"></canvas>
+                    <img id="placeholder_image" src="./zombies/zombie1.png" style="display: none">
+                    <input class="caption form-control" id="text2" type="text" placeholder="Texto inferior"><br><br>
+                    <table class="table">
+                        <tr>
+                            <td>Tamaño de fuente:</td>
+                            <td><input type="range" id="sliderSize" value="50" min="10" max="72"></td>
+                        </tr>
+                        <tr>
+                            <td>Tamaño de imagen:</td>
+                            <td><input type="range" id="sliderImage" value="600" min="240" max="600"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row">
+                    <h3 class="text-center">Subir una imagen</h3>
+                    <input type="file" id="image" class="form-control">
+                    <br>
+                </div>
+                <div class="row text-center">
+                    <button id="upload" class="btn btn-primary btn-lg">Guardar!</button>
+                    <button id="download" class="btn btn-success btn-lg">Descargar!</button>
+                    <div id="uploaded" style="color: gray">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <a href="https://github.com/skopjehacklab/meme-generator">
+            <img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub">
+        </a> -->
     </div>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
 </body>
 </html>
